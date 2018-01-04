@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Text;
 using NosSharp.ECS.Components;
-using NosSharp.ECS.Entity;
+using NosSharp.ECS.Entities;
 
-namespace NosSharp.ECS.Context
+namespace NosSharp.ECS.Contexts
 {
     public interface IContext
     {
+        IEntity GetEntity(long id);
+
         IEntity[] GetEntities();
         IEntity[] GetEntities<T>();
         IEntity[] GetEntities(Type type);
 
         IEntity[] GetEntitiesByComponent<T>();
         IEntity[] GetEntitiesByComponent(Type type);
-
-        IComponent[] GetComponents();
-        IComponent[] GetComponents<T>();
-        IComponent[] GetComponents(Type type);
 
         void RegisterEntity(IEntity entity);
         void UnregisterEntity(IEntity entity);

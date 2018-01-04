@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NosSharp.ECS.Components;
 
-namespace NosSharp.ECS.Entity
+namespace NosSharp.ECS.Entities
 {
     public class Entity : IEntity
     {
@@ -16,6 +16,11 @@ namespace NosSharp.ECS.Entity
         }
 
         public long Id { get; }
+
+        public Type EntityType
+        {
+            get { return typeof(Entity); }
+        }
 
         public bool HasComponent<T>()
         {
@@ -34,6 +39,11 @@ namespace NosSharp.ECS.Entity
 
         public IComponent GetComponent(Type type)
         {
+            if (type == null)
+            {
+                return null;
+            }
+
             return !_components.TryGetValue(type, out IComponent value) ? null : value;
         }
 
@@ -52,14 +62,14 @@ namespace NosSharp.ECS.Entity
             return _components.Values.ToArray();
         }
 
-        public void AddComponent(Type type, IComponent component)
+        public void AddComponent(IComponent component, Type type)
         {
             _components.TryAdd(type, component);
         }
 
-        public void AddComponent<T>(IComponent component)
+        public void AddComponent<T>(IComponent component) where T : class
         {
-            AddComponent(typeof(T), component);
+            AddComponent(component, typeof(T));
         }
 
         public bool RemoveComponent<T>()

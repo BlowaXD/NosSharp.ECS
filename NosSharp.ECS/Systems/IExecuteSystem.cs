@@ -1,4 +1,4 @@
-﻿namespace NosSharp.ECS.System
+﻿namespace NosSharp.ECS.Systems
 {
     public interface IExecuteSystem : ISystem
     {
