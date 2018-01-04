@@ -22,13 +22,9 @@ namespace NosSharp.ECS.Test
         [TestMethod]
         public void GetComponentTest()
         {
+            _entity.AddComponent<HealthComponent>(_component);
             Assert.IsNotNull(_entity.GetComponent<HealthComponent>());
             Assert.IsNotNull(_entity.GetComponent(_component.Type));
-        }
-
-        public void HasComponentTest()
-        {
-            Assert.IsTrue(_entity.HasComponent(_component.Type));
         }
     }
 }
