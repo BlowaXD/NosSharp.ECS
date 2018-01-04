@@ -10,14 +10,12 @@ namespace NosSharp.ECS.Contexts
     {
         protected readonly Dictionary<long, IEntity> Entities;
         protected readonly Dictionary<Type, List<IEntity>> EntitiesByComponents;
-        protected readonly Dictionary<Type, List<IEntity>> EntitiesByType;
         protected readonly List<IComponent> Components;
 
         public Context()
         {
             Entities = new Dictionary<long, IEntity>();
             EntitiesByComponents = new Dictionary<Type, List<IEntity>>();
-            EntitiesByType = new Dictionary<Type, List<IEntity>>();
             Components = new List<IComponent>();
         }
 
@@ -38,16 +36,6 @@ namespace NosSharp.ECS.Contexts
 
         public IEntity[] GetEntities(Type type)
         {
-            return !EntitiesByType.TryGetValue(type, out List<IEntity> entities) ? null : entities.ToArray();
-        }
-
-        public IEntity[] GetEntitiesByComponent<T>()
-        {
-            return GetEntitiesByComponent(typeof(T));
-        }
-
-        public IEntity[] GetEntitiesByComponent(Type type)
-        {
             return !EntitiesByComponents.TryGetValue(type, out List<IEntity> entities) ? null : entities.ToArray();
         }
 
@@ -61,10 +49,9 @@ namespace NosSharp.ECS.Contexts
             IComponent[] components = entity.GetComponents();
             Type entityType = entity.EntityType;
 
-            List<IEntity> entities;
             foreach (IComponent component in components.Concat(Components))
             {
-                if (!EntitiesByComponents.TryGetValue(component.Type, out entities))
+                if (!EntitiesByComponents.TryGetValue(component.Type, out List<IEntity> entities))
                 {
                     entities = new List<IEntity>();
                 }
@@ -72,14 +59,6 @@ namespace NosSharp.ECS.Contexts
                 entities.Add(entity);
                 EntitiesByComponents[component.Type] = entities;
             }
-
-            if (!EntitiesByType.TryGetValue(entityType, out entities))
-            {
-                entities = new List<IEntity>();
-            }
-
-            entities.Add(entity);
-            EntitiesByComponents[entityType] = entities;
         }
 
         public void UnregisterEntity(IEntity entity)
@@ -90,12 +69,10 @@ namespace NosSharp.ECS.Contexts
             }
 
             IComponent[] components = entity.GetComponents();
-            Type entityType = entity.EntityType;
 
-            List<IEntity> entities;
             foreach (IComponent component in components.Concat(Components))
             {
-                if (!EntitiesByComponents.TryGetValue(component.Type, out entities))
+                if (!EntitiesByComponents.TryGetValue(component.Type, out List<IEntity> entities))
                 {
                     throw new ArgumentException();
                 }
@@ -103,14 +80,6 @@ namespace NosSharp.ECS.Contexts
                 entities.Remove(entity);
                 EntitiesByComponents[component.Type] = entities;
             }
-
-            if (!EntitiesByType.TryGetValue(entityType, out entities))
-            {
-                throw new ArgumentException();
-            }
-
-            entities.Remove(entity);
-            EntitiesByComponents[entityType] = entities;
         }
     }
 }
