@@ -6,13 +6,13 @@ using NosSharp.ECS.Entities;
 
 namespace NosSharp.ECS.Contexts
 {
-    public class Context : IContext
+    public class EntityManager : IEntityManager
     {
         protected readonly Dictionary<long, IEntity> Entities;
         protected readonly Dictionary<Type, List<IEntity>> EntitiesByComponents;
         protected readonly List<IComponent> Components;
 
-        public Context()
+        public EntityManager()
         {
             Entities = new Dictionary<long, IEntity>();
             EntitiesByComponents = new Dictionary<Type, List<IEntity>>();

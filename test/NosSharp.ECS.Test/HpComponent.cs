@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using IComponent = NosSharp.ECS.Components.IComponent;
 
 namespace NosSharp.ECS.Test

@@ -14,7 +14,7 @@ namespace NosSharp.ECS.Entities
         bool HasComponent(Type type);
 
 
-        IComponent GetComponent<T>();
+        T GetComponent<T>();
         IComponent GetComponent(Type type);
 
 

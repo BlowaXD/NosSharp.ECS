@@ -7,12 +7,12 @@ namespace NosSharp.ECS.Entities
 {
     public class Entity : IEntity
     {
-        private readonly Dictionary<Type, IComponent> _components;
+        protected readonly Dictionary<Type, IComponent> Components;
 
         public Entity(long id)
         {
             Id = id;
-            _components = new Dictionary<Type, IComponent>();
+            Components = new Dictionary<Type, IComponent>();
         }
 
         public long Id { get; }
@@ -29,12 +29,12 @@ namespace NosSharp.ECS.Entities
 
         public bool HasComponent(Type type)
         {
-            return _components.ContainsKey(type);
+            return Components.ContainsKey(type);
         }
 
-        public IComponent GetComponent<T>()
+        public T GetComponent<T>()
         {
-            return GetComponent(typeof(T));
+            return (T) GetComponent(typeof(T));
         }
 
         public IComponent GetComponent(Type type)
@@ -44,12 +44,12 @@ namespace NosSharp.ECS.Entities
                 return null;
             }
 
-            return !_components.TryGetValue(type, out IComponent value) ? null : value;
+            return !Components.TryGetValue(type, out IComponent value) ? null : value;
         }
 
         public IComponent[] GetComponents()
         {
-            return _components.Values.ToArray();
+            return Components.Values.ToArray();
         }
 
         public IComponent[] GetComponents<T>()
@@ -59,12 +59,12 @@ namespace NosSharp.ECS.Entities
 
         public IComponent[] GetComponents(Type type)
         {
-            return _components.Values.ToArray();
+            return Components.Values.ToArray();
         }
 
         public void AddComponent(IComponent component, Type type)
         {
-            _components.TryAdd(type, component);
+            Components.TryAdd(type, component);
         }
 
         public void AddComponent<T>(IComponent component) where T : class
@@ -79,7 +79,7 @@ namespace NosSharp.ECS.Entities
 
         public bool RemoveComponent(Type type)
         {
-            return _components.Remove(type);
+            return Components.Remove(type);
         }
 
         public void Destroy()
