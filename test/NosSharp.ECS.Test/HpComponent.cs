@@ -5,8 +5,8 @@ namespace NosSharp.ECS.Test
 {
     public class HealthComponent : IComponent
     {
-        private readonly ulong _hp = 10;
-        private readonly ulong _mp = 10;
+        private ulong _hp = 10;
+        private ulong _mp = 10;
 
         public HealthComponent()
         {
@@ -20,11 +20,13 @@ namespace NosSharp.ECS.Test
         public ulong Hp
         {
             get { return _hp; }
+            set { _hp = value; }
         }
 
         public ulong Mp
         {
             get { return _mp; }
+            set { _mp = value; }
         }
 
         public Type Type

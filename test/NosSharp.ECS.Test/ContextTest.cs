@@ -37,7 +37,7 @@ namespace NosSharp.ECS.Test
             map.SessionRegistered += (sender, args) => { Console.WriteLine($"[LOG] {args.EntityId} connected"); };
             map.SessionRegistered += (sender, args) => { Console.WriteLine($"[Broadcast] Bonjour tout le monde"); };
 
-            var entityKilledArgs = new EntityKilledEventArgs
+            EntityKilledEventArgs entityKilledArgs = new EntityKilledEventArgs
             {
                 EntityType = 1,
                 EntityId = 1,

@@ -39,6 +39,14 @@ namespace NosSharp.ECS.Contexts
             return !EntitiesByComponents.TryGetValue(type, out List<IEntity> entities) ? null : entities.ToArray();
         }
 
+        public void RegisterEntity(IEntity[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                RegisterEntity(entity);
+            }
+        }
+
         public void RegisterEntity(IEntity entity)
         {
             if (entity == null)
@@ -58,6 +66,14 @@ namespace NosSharp.ECS.Contexts
 
                 entities.Add(entity);
                 EntitiesByComponents[component.Type] = entities;
+            }
+        }
+
+        public void UnregisterEntity(IEntity[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                UnregisterEntity(entity);
             }
         }
 

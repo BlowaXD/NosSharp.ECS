@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NosSharp.ECS.Components;
 using NosSharp.ECS.Entities;
 
@@ -40,10 +41,14 @@ namespace NosSharp.ECS.Contexts
         /// <param name="entity"></param>
         void RegisterEntity(IEntity entity);
 
+        void RegisterEntity(IEntity[] entities);
+
         /// <summary>
         /// Unregister the Entity in the actual <see cref="IEntityManager"/>
         /// </summary>
         /// <param name="entity"></param>
         void UnregisterEntity(IEntity entity);
+
+        void UnregisterEntity(IEntity[] entities);
     }
 }
