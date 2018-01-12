@@ -29,7 +29,6 @@ namespace NosSharp.ECS.Test
             _emptyentities.AddRange(Enumerable.Range(0, 150000).Select(s => new Entity(s)));
             _entityManager.RegisterEntity(_entities.ToArray());
             _system = new HpBarSystem();
-            _system.Subscribe(_entityManager);
             for (int i = 0; i < 10; i++)
             {
                 Console.WriteLine($"[-------- {i} --------]");

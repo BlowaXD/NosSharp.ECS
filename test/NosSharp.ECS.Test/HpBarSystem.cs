@@ -19,63 +19,16 @@ namespace NosSharp.ECS.Test
         }
     }
 
-    public class HpBarSystem : IExecuteSystem
+    public class HpBarSystem : EventableSystem<HpBarSystem>, IExecuteSystem, IEventableSystem
     {
-        private static event EventHandler<HpBarArgs> HpBarEvent;
+        public static event EventHandler<HpBarArgs> HpBarEvent;
         private readonly List<IEntityManager> _entityManagers = new List<IEntityManager>();
-
-        /// <summary>
-        /// This will subscribe a callback for the event when args are of type T
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="callback"></param>
-        public static void SubscribeEvent<T>(EventHandler<T> callback)
-        {
-            EventInfo @event = typeof(HpBarSystem).GetEvents(BindingFlags.Static | BindingFlags.Public).FirstOrDefault(s => s.EventHandlerType == typeof(T));
-            if (@event == null)
-            {
-                // NO EVENT OF TYPE T in context
-                return;
-            }
-            @event.AddMethod.Invoke(callback, null);
-        }
-
-        /// <summary>
-        /// This will raise event where args are of type T
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public static void RaiseEvent<T>(object sender, object[] args)
-        {
-
-            EventInfo @event = typeof(HpBarSystem).GetEvents(BindingFlags.Static | BindingFlags.Public).FirstOrDefault(s => s.EventHandlerType == typeof(T));
-            if (@event == null)
-            {
-                // NO EVENT OF TYPE T in context
-                return;
-            }
-
-            @event.RaiseMethod.Invoke(sender, args);
-        }
-
-        public static void UnsubscribeEvent<T>(EventHandler<T> callback)
-        {
-            EventInfo @event = typeof(HpBarSystem).GetEvents(BindingFlags.Static | BindingFlags.Public).FirstOrDefault(s => s.EventHandlerType == typeof(T));
-            if (@event == null)
-            {
-                return;
-            }
-
-            @event.RemoveMethod.Invoke(callback, null);
-        }
-
-
+        
         public void Subscribe(IEntityManager manager)
         {
             SubscribeEvent<HpBarArgs>((sender, args) =>
             {
-                Console.WriteLine($"On Event it will be raised");
+                Console.WriteLine($"HpBarEvent Has been raised");
             });
             _entityManagers.Add(manager);
         }
