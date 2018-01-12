@@ -14,9 +14,8 @@ namespace NosSharp.ECS.Test
     {
         private readonly List<IEntity> _emptyentities = new List<IEntity>();
         private readonly List<IEntity> _entities = new List<IEntity>();
-        private readonly IComponent _component = new HealthComponent();
         private readonly IEntityManager _entityManager = new EntityManager();
-        private IExecuteSystem _system;
+        private HpBarSystem _system;
 
         [TestMethod]
         public void AddComponentTest()
@@ -29,9 +28,8 @@ namespace NosSharp.ECS.Test
             }));
             _emptyentities.AddRange(Enumerable.Range(0, 150000).Select(s => new Entity(s)));
             _entityManager.RegisterEntity(_entities.ToArray());
-            var system = new HpBarSystem();
-            system.Subscribe(_entityManager);
-            _system = system;
+            _system = new HpBarSystem();
+            _system.Subscribe(_entityManager);
             for (int i = 0; i < 10; i++)
             {
                 Console.WriteLine($"[-------- {i} --------]");
