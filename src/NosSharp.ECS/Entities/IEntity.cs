@@ -14,12 +14,12 @@ namespace NosSharp.ECS.Entities
         bool HasComponent(Type type);
 
 
-        T GetComponent<T>();
+        T GetComponent<T>() where T : IComponent;
         IComponent GetComponent(Type type);
 
 
         IComponent[] GetComponents();
-        IComponent[] GetComponents<T>();
+        IComponent[] GetComponents<T>() where T : IComponent;
         IComponent[] GetComponents(Type type);
 
         void AddComponent(IComponent component, Type type);

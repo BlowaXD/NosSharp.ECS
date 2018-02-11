@@ -17,10 +17,7 @@ namespace NosSharp.ECS.Entities
 
         public long Id { get; }
 
-        public Type EntityType
-        {
-            get { return typeof(Entity); }
-        }
+        public Type EntityType => typeof(Entity);
 
         public bool HasComponent<T>()
         {
@@ -32,7 +29,8 @@ namespace NosSharp.ECS.Entities
             return Components.ContainsKey(type);
         }
 
-        public T GetComponent<T>()
+        /// <inheritdoc />
+        public T GetComponent<T>() where T : IComponent
         {
             return (T) GetComponent(typeof(T));
         }
@@ -52,7 +50,7 @@ namespace NosSharp.ECS.Entities
             return Components.Values.ToArray();
         }
 
-        public IComponent[] GetComponents<T>()
+        public IComponent[] GetComponents<T>() where T : IComponent
         {
             return GetComponents(typeof(T));
         }
@@ -84,7 +82,6 @@ namespace NosSharp.ECS.Entities
 
         public void Destroy()
         {
-            // DONT KNOW WHAT HAS TO BE DONE YET
         }
     }
 }
